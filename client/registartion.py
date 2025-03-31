@@ -1,12 +1,16 @@
 from tkinter import *
+from constants import BASE_URL, ADMIN_GROUP
 from tkinter import messagebox
+from student_lobby import StudentLobby
+from admin_lobby import AdminLobby
 import requests
+
+
 class Registration:
-    def __init__(self, root, name="", group=""):
+    def __init__(self, root):
         self.root = root
-        self.name = name
-        self.group = group
         self.windowSetup()
+
     def windowSettings(self):
         self.root.geometry("300x200")
         self.root.title("Sign in")
@@ -27,19 +31,29 @@ class Registration:
         self.btnHelp.pack()
 
     def submit(self):
-        self.name = self.entryName.get()
-        self.group = self.entryGroup.get()
+        self.name = str(self.entryName.get())
+        self.group = str(self.entryGroup.get())
+        data = {"name": self.entryName.get(), "group": self.entryGroup.get()}
 
-        response = requests.post("http://127.0.0.1:8000/sign_in",
-                                 json={"name": self.name, "group": self.group})
+        try:
+            response = requests.post(f'{BASE_URL}/sign_in', json=data)
 
-        if response.status_code == 200:
-            print("Response from server:", response.json())
-        else:
-            print("Error:", response.status_code)
+            if response.status_code == 200:
+                if self.group != ADMIN_GROUP:
+                    StudentLobby(self.root, self.name, self.group)
+                else:
+                    AdminLobby(self.root)
+                #self.root.withdraw()
+                #self.root.destroy()
+            else:
+                error_details = response.json().get("detail", "Неизвестная ошибка")
+                messagebox.showerror("Error", f"Status {response.status_code}: {error_details}")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+            print(e)
 
     def helpMessage(self):
-        messagebox.showinfo("help", "Its test for education")
+        messagebox.showinfo("Help", "Its test for education")
 
 
 def main():
