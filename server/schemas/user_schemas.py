@@ -5,5 +5,5 @@ class Sign_in(BaseModel):
     group: str = Field(max_length=10)
     isAdmin: bool = False
 
-class user(Sign_in):
+class User(Sign_in):
     score: int
