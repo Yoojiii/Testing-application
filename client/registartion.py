@@ -1,8 +1,8 @@
 from tkinter import *
 from constants import BASE_URL, ADMIN_GROUP
 from tkinter import messagebox
-from student_lobby import StudentLobby
-from admin_lobby import AdminLobby
+from student.student_lobby import StudentLobby
+from admin.admin_lobby import AdminLobby
 import requests
 
 

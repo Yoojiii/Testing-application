@@ -2,14 +2,14 @@ from tkinter import *
 from tkinter import messagebox
 import requests
 
-class Student:
-    def __init__(self, root):
-        self.root = root
+class StudentQA:
+    def __init__(self, parent):
+        self.window = Toplevel(parent)
         self.windowSettings()
 
     def windowSettings(self):
-        self.root.geometry("300x200")
-        self.root.title("Student")
+        self.window.geometry("500x400")
+        self.window.title("QA")
 
 # root = Tk()
 # sudent = Student(root)

@@ -1,3 +1,4 @@
+from server.websockets.websocket_manager import AdminWebsockets
 from tkinter import *
 import requests
 from constants import BASE_URL
@@ -25,7 +26,8 @@ class AdminLobby:
         self.statsLabel = Label(self.window, text="Sats...")
         self.statsLabel.pack()
         self.createTestBtn = Button(self.window, width=6, text="Create Test", command=self.createTest)
-        self.startExamBtn = Button(self.window, width=6, text="Start Exam", command=self.startExam)
+        admin_ws = AdminWebsockets()
+        self.startExamBtn = Button(self.window, width=6, text="Start Exam", command=admin_ws.startExam)
         self.createTestBtn.pack()
         self.startExamBtn.pack()
 
@@ -36,5 +38,4 @@ class AdminLobby:
     def createTest(self):
         pass
     
-    def startExam(self):
-        pass
+    
